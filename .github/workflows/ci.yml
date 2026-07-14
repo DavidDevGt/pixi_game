@@ -22,7 +22,7 @@ jobs:
 
       # pnpm/action-setup lee la versión de "packageManager" en package.json:
       # CI y dev usan exactamente el mismo gestor.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v4
         with:
@@ -66,7 +66,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v4
         with:
