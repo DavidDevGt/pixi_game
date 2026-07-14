@@ -42,9 +42,14 @@ export class BootScene implements Scene {
       const local = this.world.toLocal(e.global);
       const { gx, gy } = screenToGrid(local.x, local.y);
       this.highlight.clear();
-      if (gx >= 0 && gx < GRID && gy >= 0 && gy < GRID) {
+      const inside = gx >= 0 && gx < GRID && gy >= 0 && gy < GRID;
+      if (inside) {
         this.diamondPath(this.highlight, gx, gy);
         this.highlight.fill({ color: 0x4e78c4, alpha: 0.55 });
+        // Hook de testabilidad para e2e (y debugging en dispositivo).
+        document.body.dataset["selectedTile"] = `${gx},${gy}`;
+      } else {
+        delete document.body.dataset["selectedTile"];
       }
     });
   }

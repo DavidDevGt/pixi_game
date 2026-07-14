@@ -17,6 +17,9 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
     "cap:sync": "pnpm build && cap sync",
     "cap:android": "cap open android",
     "cap:ios": "cap open ios"
@@ -27,6 +30,7 @@
   },
   "devDependencies": {
     "@capacitor/android": "^8.4.1",
+    "@playwright/test": "^1.61.1",
     "@capacitor/cli": "^8.4.1",
     "@capacitor/ios": "^8.4.1",
     "@eslint/js": "^10.0.1",

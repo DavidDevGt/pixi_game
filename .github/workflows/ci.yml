@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Entorno · Typecheck · Lint · Tests · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm/action-setup lee la versión de "packageManager" en package.json:
+      # CI y dev usan exactamente el mismo gestor.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      # --frozen-lockfile: el lockfile ES el entorno; si package.json y el
+      # lock divergen, CI falla en vez de resolver en silencio.
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Validar peer dependencies
+        run: pnpm peers check
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Formato
+        run: pnpm format:check
+
+      - name: Tests unitarios (lógica pura)
+        run: pnpm test
+
+      - name: Build de producción
+        run: pnpm build
+
+      - name: Publicar bundle como artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  e2e:
+    name: E2E (Chromium + WebKit, viewports móviles)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Cache de navegadores Playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # Solo los engines que representan los runtimes reales del juego:
+      # Chromium (WebView Android / desktop) y WebKit (WKWebView de iOS).
+      - name: Instalar navegadores
+        run: pnpm exec playwright install --with-deps chromium webkit
+
+      - name: Tests E2E
+        run: pnpm e2e
+
+      - name: Publicar reporte Playwright
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  # Compilación nativa (Capacitor): se activará cuando exista android/.
+  # Requiere: java 21 + gradle; pnpm cap:sync && cd android && ./gradlew assembleDebug

@@ -27,6 +27,9 @@ async function bootstrap(): Promise<void> {
 
   const scenes = new SceneManager(app);
   await scenes.change(new BootScene(app));
+
+  // Hook de testabilidad: e2e (Playwright) espera esta marca para interactuar.
+  document.body.dataset["appReady"] = "true";
 }
 
 void bootstrap();

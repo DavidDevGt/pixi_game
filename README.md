@@ -6,15 +6,15 @@ Juego de estrategia por turnos (4X lite) **para móvil**, construido sobre **Pix
 
 La carpeta [docs/](docs/) contiene los fundamentos del framework y las convenciones del proyecto. Léela en orden si es tu primera vez con PixiJS:
 
-| Doc | Contenido |
-|---|---|
-| [01 — Arquitectura del motor](docs/01-arquitectura.md) | Qué es (y qué no es) PixiJS, pipeline de render, backends, batching |
-| [02 — Conceptos fundamentales](docs/02-conceptos-fundamentales.md) | Application, Container, Sprite, Texture, Assets, Ticker, Graphics, Text, eventos |
-| [03 — Patrones de juego](docs/03-patrones-de-juego.md) | Game loop, escenas, input, pipeline de assets, estructura de carpetas |
-| [04 — Rendimiento y memoria](docs/04-rendimiento.md) | Batching en la práctica, culling, render groups, gestión de memoria, qué evitar |
-| [05 — Investigación: Polytopia](docs/05-investigacion-polytopia.md) | Síntesis de mercado, deconstrucción del diseño, debilidades del líder, lecciones |
-| [06 — Estrategia móvil](docs/06-estrategia-movil.md) | El playbook de Polytopia adaptado a 2026: producto, monetización, fases, riesgos |
-| [07 — Renderizado isométrico](docs/07-renderizado-isometrico.md) | Proyección 2:1, orden de profundidad, capas, mapa procedural → sprites, autotiling |
+| Doc                                                                 | Contenido                                                                          |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [01 — Arquitectura del motor](docs/01-arquitectura.md)              | Qué es (y qué no es) PixiJS, pipeline de render, backends, batching                |
+| [02 — Conceptos fundamentales](docs/02-conceptos-fundamentales.md)  | Application, Container, Sprite, Texture, Assets, Ticker, Graphics, Text, eventos   |
+| [03 — Patrones de juego](docs/03-patrones-de-juego.md)              | Game loop, escenas, input, pipeline de assets, estructura de carpetas              |
+| [04 — Rendimiento y memoria](docs/04-rendimiento.md)                | Batching en la práctica, culling, render groups, gestión de memoria, qué evitar    |
+| [05 — Investigación: Polytopia](docs/05-investigacion-polytopia.md) | Síntesis de mercado, deconstrucción del diseño, debilidades del líder, lecciones   |
+| [06 — Estrategia móvil](docs/06-estrategia-movil.md)                | El playbook de Polytopia adaptado a 2026: producto, monetización, fases, riesgos   |
+| [07 — Renderizado isométrico](docs/07-renderizado-isometrico.md)    | Proyección 2:1, orden de profundidad, capas, mapa procedural → sprites, autotiling |
 
 ## Stack
 
@@ -29,11 +29,21 @@ La carpeta [docs/](docs/) contiene los fundamentos del framework y las convencio
 ```bash
 pnpm install
 pnpm dev        # dev server (accesible en LAN para probar en el móvil)
-pnpm test       # tests de lógica pura
+pnpm test       # tests de lógica pura (Vitest)
+pnpm e2e        # tests end-to-end (Playwright: Chromium + WebKit, viewports móviles)
 pnpm lint       # eslint
 pnpm build      # typecheck + bundle de producción
 pnpm cap:sync   # build + sincronizar con los proyectos nativos
 ```
+
+Primera vez con e2e: `pnpm exec playwright install chromium webkit`.
+
+## CI
+
+`.github/workflows/ci.yml` corre en cada push/PR: instalación con lockfile congelado,
+validación de peers, typecheck, lint, formato, tests unitarios, build (publicado como
+artifact) y e2e sobre Chromium (WebView Android) y WebKit (WKWebView iOS).
+Dependabot agrupa actualizaciones menores en un PR semanal.
 
 ## Estructura
 

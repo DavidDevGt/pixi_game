@@ -1,0 +1,8 @@
+pnpm-lock.yaml
+dist/
+android/
+ios/
+playwright-report/
+test-results/
+# Docs redactados a mano: el reflow de prettier solo genera ruido en diffs.
+docs/
