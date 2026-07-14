@@ -15,6 +15,7 @@ La carpeta [docs/](docs/) contiene los fundamentos del framework y las convencio
 | [05 — Investigación: Polytopia](docs/05-investigacion-polytopia.md) | Síntesis de mercado, deconstrucción del diseño, debilidades del líder, lecciones   |
 | [06 — Estrategia móvil](docs/06-estrategia-movil.md)                | El playbook de Polytopia adaptado a 2026: producto, monetización, fases, riesgos   |
 | [07 — Renderizado isométrico](docs/07-renderizado-isometrico.md)    | Proyección 2:1, orden de profundidad, capas, mapa procedural → sprites, autotiling |
+| [08 — Política de dependencias](docs/08-dependencias.md)            | Librerías rechazadas, pendientes con disparador, y cuáles llegan en cada fase      |
 
 ## Stack
 
@@ -50,7 +51,7 @@ Dependabot agrupa actualizaciones menores en un PR semanal.
 ```
 src/
   main.ts        # bootstrap (Application, DPR cap, pausa en background, seed por URL)
-  core/          # escenas, input, timestep fijo — infraestructura
+  core/          # contrato de escena + SceneManager — infraestructura
   game/          # lógica pura sin Pixi + tests: iso (proyección), rng, map (procedural), seed
   render/        # tileset placeholder bakeado a texturas en runtime
   scenes/        # GameScene: capas isométricas, cámara pan/zoom/pinch, selección

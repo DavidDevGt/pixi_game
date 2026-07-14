@@ -2,6 +2,8 @@
 
 PixiJS no impone arquitectura de juego. Estos son los patrones que este proyecto adopta para llenar ese vacío. Son convenciones: si un caso real las contradice, se discute en PR, no se ignoran en silencio.
 
+> **Nota (2026-07):** las secciones de *game loop con timestep fijo* e *input de teclado* aplican solo a gameplay en tiempo real. El juego actual es un 4X por turnos con loop event-driven (doc 07 §"Traducción técnica"), así que esos módulos no existen en `src/core/` — este doc conserva los patrones como referencia por si aparece un modo en tiempo real.
+
 ## Estructura de carpetas
 
 ```
