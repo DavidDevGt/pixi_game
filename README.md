@@ -49,11 +49,14 @@ Dependabot agrupa actualizaciones menores en un PR semanal.
 
 ```
 src/
-  main.ts        # bootstrap (Application, DPR cap, pausa en background)
+  main.ts        # bootstrap (Application, DPR cap, pausa en background, seed por URL)
   core/          # escenas, input, timestep fijo — infraestructura
-  game/          # lógica pura sin Pixi (iso.ts, rng.ts) + tests
-  scenes/        # escenas del juego (boot = retícula isométrica + picking)
+  game/          # lógica pura sin Pixi + tests: iso (proyección), rng, map (procedural), seed
+  render/        # tileset placeholder bakeado a texturas en runtime
+  scenes/        # GameScene: capas isométricas, cámara pan/zoom/pinch, selección
 ```
+
+Tip: `pnpm dev` y abrir `/?seed=42` para fijar el mapa; sin parámetro usa la semilla diaria (UTC).
 
 ## Referencias externas
 

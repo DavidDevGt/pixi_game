@@ -1,6 +1,13 @@
 import { Application } from "pixi.js";
 import { SceneManager } from "./core/scene-manager";
-import { BootScene } from "./scenes/boot";
+import { dailySeed } from "./game/seed";
+import { GameScene } from "./scenes/game";
+
+/** `?seed=N` fija el mapa (debug, retos por link); sin él, la semilla diaria. */
+function resolveSeed(): number {
+  const raw = Number(new URLSearchParams(window.location.search).get("seed"));
+  return Number.isInteger(raw) && raw > 0 ? raw : dailySeed();
+}
 
 async function bootstrap(): Promise<void> {
   const app = new Application();
@@ -26,7 +33,7 @@ async function bootstrap(): Promise<void> {
   });
 
   const scenes = new SceneManager(app);
-  await scenes.change(new BootScene(app));
+  await scenes.change(new GameScene(app, resolveSeed()));
 
   // Hook de testabilidad: e2e (Playwright) espera esta marca para interactuar.
   document.body.dataset["appReady"] = "true";
