@@ -25,20 +25,20 @@
     "cap:ios": "cap open ios"
   },
   "dependencies": {
-    "@capacitor/core": "^8.4.1",
+    "@capacitor/core": "^8.4.2",
     "pixi.js": "^8.19.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^8.4.1",
+    "@capacitor/android": "^8.4.2",
     "@playwright/test": "^1.61.1",
-    "@capacitor/cli": "^8.4.1",
-    "@capacitor/ios": "^8.4.1",
+    "@capacitor/cli": "^8.4.2",
+    "@capacitor/ios": "^8.4.2",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.7.0",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.63.0",
-    "vite": "^8.1.4",
+    "typescript-eslint": "^8.65.0",
+    "vite": "^8.1.5",
     "vitest": "^4.1.10"
   }
 }
